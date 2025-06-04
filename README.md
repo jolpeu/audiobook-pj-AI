@@ -1,14 +1,45 @@
-# 🎧 AI 기반 몰입형 오디오북 생성 시스템
+# Emotion Sound Effect API
 
-이 프로젝트는 이미지 기반 한국어 동화책/만화를 입력받아  
-OCR → 감정 분석 → 음성 합성(TTS) → 효과음 삽입의 과정을 거쳐  
-**몰입감 있는 오디오북을 자동으로 생성하는 AI 시스템**입니다.
+This project provides an API for emotion recognition from text (e.g., OCR from PDF) and recommends appropriate sound effects based on the predicted emotion.
 
----
+## Features
 
-## 🧠 핵심 기능
+- Upload a storybook PDF
+- Automatically extract sentences
+- Predict emotion using a fine-tuned RoBERTa model
+- Recommend a sound effect per sentence
 
-- 📷 **OCR 처리**: 책 이미지에서 텍스트 자동 추출
-- 🎭 **감정 분석**: 문장의 감정을 분류하여 자연스럽게 말투 조절
-- 🗣️ **감정 TTS**: 감정이 반영된 음성으로 대사 생성
-- 🎧 **효과음 추천**: 상황에 어울리는 효과음을 자동 삽입
+## Local Setup
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the FastAPI app
+python -m uvicorn main:app --reload
+```
+
+## API Endpoints
+
+### `POST /predict_pdf`
+Upload a PDF and receive a list of sentences with predicted emotion and matching sound effect.
+
+```json
+[
+  {
+    "sentence": "The boy was crying in the corner.",
+    "emotion": "슬픔",
+    "effect_file": "rain.wav"
+  },
+  ...
+]
+```
+
+## Folder Structure
+
+```
+finetuned_emotion_model/      # Huggingface model
+ESC-50-master/audio/          # ESC-50 audio files
+```
+
+Make sure these folders exist with the correct files before running the server.
